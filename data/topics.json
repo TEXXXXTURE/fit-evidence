@@ -21,7 +21,7 @@
         "PMC11346223",
         "WILEY-rco2.70044"
       ],
-      "updated_at": "2026-09-22"
+      "updated_at": "2026-09-23"
     },
     {
       "id": "protein_supplement",
@@ -44,7 +44,7 @@
         "PMC8978023",
         "PMC12862422"
       ],
-      "updated_at": "2026-09-22"
+      "updated_at": "2026-09-23"
     },
     {
       "id": "protein_timing",
@@ -67,7 +67,7 @@
         "SCHOENFELD2013",
         "PMID40647175"
       ],
-      "updated_at": "2026-09-22"
+      "updated_at": "2026-09-23"
     },
     {
       "id": "stretching",
@@ -91,7 +91,7 @@
         "PMC7586796",
         "PMC12305623"
       ],
-      "updated_at": "2026-09-22"
+      "updated_at": "2026-09-23"
     },
     {
       "id": "cold_heat_therapy",
@@ -118,7 +118,7 @@
         "COCHRANE-CD008262",
         "PMC11897523"
       ],
-      "updated_at": "2026-09-22"
+      "updated_at": "2026-09-23"
     },
     {
       "id": "foam_rolling",
@@ -141,7 +141,7 @@
         "WIEWELHOVE2019",
         "MENTOR-10758"
       ],
-      "updated_at": "2026-09-22"
+      "updated_at": "2026-09-23"
     }
   ]
 }

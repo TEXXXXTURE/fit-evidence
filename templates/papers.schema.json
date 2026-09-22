@@ -1,0 +1,31 @@
+{
+  "table": "papers",
+  "desc": "文献明细表。表头字段名即 CSV / 飞书多维表格字段名，与 scripts/sync_lark.py 契约一致。",
+  "fields": [
+    {"name": "id", "type": "text", "required": true, "desc": "文献唯一 id（如 PMC11547435）"},
+    {"name": "topic", "type": "text", "required": true, "desc": "所属主题 id（对应 topics 表 id）"},
+    {"name": "title", "type": "text", "desc": "文献标题（可溯源）"},
+    {"name": "year", "type": "number", "desc": "发表年份"},
+    {"name": "journal", "type": "text", "desc": "期刊/来源"},
+    {"name": "url", "type": "url", "desc": "可溯源链接（PMC/PubMed/Cochrane 等）"},
+    {"name": "design", "type": "text", "desc": "研究设计（systematic_review_meta_analysis / rct / cohort ...）"},
+    {"name": "population", "type": "text", "desc": "研究人群"},
+    {"name": "intervention", "type": "text", "desc": "干预措施"},
+    {"name": "outcome", "type": "text", "desc": "主要结局"},
+    {"name": "effect_size", "type": "text", "desc": "效应量（large/moderate/small/minimal/none）"},
+    {"name": "method_quality", "type": "number", "desc": "方法学质量 0-100（人工评）"},
+    {"name": "venue", "type": "text", "desc": "发表渠道（peer_reviewed_top / peer_reviewed / preprint / non_reviewed）"},
+    {"name": "reproducibility", "type": "text", "desc": "可重复性（consistent / mixed / single / contradicted）"},
+    {"name": "recency_years", "type": "number", "desc": "距今年限（用于时效性评分）"},
+    {"name": "applicability", "type": "text", "desc": "人群适用（general / partial / specific）"},
+    {"name": "actionability", "type": "text", "desc": "可操作性（clear / vague / unclear）"},
+    {"name": "cost_risk", "type": "text", "desc": "成本风险（low / medium / high）"},
+    {"name": "limitations", "type": "text", "desc": "局限性（多条目用 | 分隔）"},
+    {"name": "conclusion", "type": "text", "desc": "结论（中文，含边界条件）"},
+    {"name": "analyzed_at", "type": "date", "desc": "分析日期"},
+    {"name": "score_A", "type": "number", "desc": "证据真实度（脚本回填）"},
+    {"name": "score_B", "type": "number", "desc": "生活影响度（脚本回填）"},
+    {"name": "score_total", "type": "number", "desc": "综合分（脚本回填）"},
+    {"name": "grade", "type": "text", "desc": "分级（脚本回填：strong/recommended/uncertain/unreliable）"}
+  ]
+}

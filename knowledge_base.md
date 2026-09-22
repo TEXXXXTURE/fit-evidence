@@ -1,6 +1,6 @@
 # FitEvidence 知识库（自动生成，勿手改）
 
-> 由 `scripts/build_knowledge_base.py` 生成 · 更新于 2026-09-22
+> 由 `scripts/build_knowledge_base.py` 生成 · 更新于 2026-09-23
 > 评分口径：综合分 = 0.65×证据真实度(A) + 0.35×生活影响度(B)，详见 references/scoring_rubric.md
 
 ## 一、主题结论总览

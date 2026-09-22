@@ -14,7 +14,11 @@ FitEvidence build_knowledge_base.py
 import argparse
 import json
 import os
+import sys
 import datetime
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import storage  # noqa: E402
 
 GRADE_LABEL = {
     "strong": "强证据·可执行",
@@ -35,11 +39,12 @@ def dump_json(path, obj):
         json.dump(obj, f, ensure_ascii=False, indent=2)
 
 
-def build(skill_dir):
-    data_dir = os.path.join(skill_dir, "data")
+def build(skill_dir, data_dir=None):
+    data_dir = data_dir or storage.resolve_data_dir(skill_dir)
     papers_path = os.path.join(data_dir, "papers.json")
     topics_path = os.path.join(data_dir, "topics.json")
-    view_path = os.path.join(skill_dir, "knowledge_base.md")
+    # 人读视图写到"数据目录的上一级"，保证任何后端位置下都能找到
+    view_path = os.path.join(os.path.dirname(os.path.abspath(data_dir)), "knowledge_base.md")
 
     papers_data = load_json(papers_path)
     papers = papers_data["papers"] if isinstance(papers_data, dict) else papers_data
@@ -131,9 +136,10 @@ def _grade_from_total(total):
 def main():
     ap = argparse.ArgumentParser(description="FitEvidence 知识库生成")
     ap.add_argument("--skill-dir", default=None, help="FitEvidence skill 目录（默认自动定位到本脚本上级）")
+    ap.add_argument("--data-dir", default=None, help="数据目录（缺省按 storage.json 解析，local 默认 skill 内 data/）")
     args = ap.parse_args()
     skill_dir = args.skill_dir or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    build(skill_dir)
+    build(skill_dir, args.data_dir)
 
 
 if __name__ == "__main__":

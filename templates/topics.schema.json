@@ -1,0 +1,17 @@
+{
+  "table": "topics",
+  "desc": "主题结论表。表头字段名即 CSV / 飞书多维表格字段名，与 scripts/sync_lark.py 契约一致。",
+  "fields": [
+    {"name": "id", "type": "text", "required": true, "desc": "主题 id（如 creatine / stretching）"},
+    {"name": "topic_zh", "type": "text", "desc": "主题中文名"},
+    {"name": "question", "type": "text", "desc": "该主题回答的核心问题"},
+    {"name": "bottom_line", "type": "text", "desc": "一句话结论（人工/Agent 维护）"},
+    {"name": "action_advice", "type": "text", "desc": "行动建议（人工/Agent 维护）"},
+    {"name": "keywords", "type": "text", "desc": "归一化关键词（多词用 | 分隔）"},
+    {"name": "claim_direction", "type": "text", "desc": "主张方向：positive（正向）/ negative（反面主张·神话）"},
+    {"name": "score_total", "type": "number", "desc": "主题综合分（脚本回填）"},
+    {"name": "grade", "type": "text", "desc": "分级（脚本回填）"},
+    {"name": "key_papers", "type": "text", "desc": "关键文献 id（多篇用 | 分隔）"},
+    {"name": "updated_at", "type": "date", "desc": "更新日期（脚本回填）"}
+  ]
+}

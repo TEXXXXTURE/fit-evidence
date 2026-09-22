@@ -14,7 +14,11 @@ FitEvidence score_paper.py
 
 import argparse
 import json
+import os
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import storage  # noqa: E402
 
 # ---- 权重常量 ----
 WEIGHTS_A = {"design": 0.30, "method": 0.25, "venue": 0.15, "repro": 0.20, "recency": 0.10}
@@ -153,6 +157,7 @@ def main():
     ap = argparse.ArgumentParser(description="FitEvidence 文献双维评分")
     ap.add_argument("input", nargs="?", help="单篇分析 JSON 文件路径")
     ap.add_argument("--file", help="批量模式：papers.json 路径，为每篇回填评分字段")
+    ap.add_argument("--data-dir", default=None, help="数据目录（缺省按 storage.json 解析）")
     args = ap.parse_args()
 
     if args.file:
@@ -173,6 +178,20 @@ def main():
         p = _load_json(args.input)
         s = score_paper(p)
         print(json.dumps(s, ensure_ascii=False, indent=2))
+        return
+
+    # 无参数：按 storage.json 解析当前库并批量回填
+    skill_dir = storage.skill_dir_from_here()
+    data_dir = args.data_dir or storage.resolve_data_dir(skill_dir)
+    papers_path = storage.papers_path(data_dir)
+    if os.path.exists(papers_path):
+        data = _load_json(papers_path)
+        papers = data["papers"] if isinstance(data, dict) and "papers" in data else data
+        for p in papers:
+            s = score_paper(p)
+            p.update(s)
+        _dump_json(papers_path, data)
+        print("已回填评分 -> {0}（{1} 篇，按 storage.json 定位）".format(papers_path, len(papers)))
         return
 
     ap.print_help()
