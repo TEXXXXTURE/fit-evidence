@@ -1,0 +1,147 @@
+{
+  "topics": [
+    {
+      "id": "creatine",
+      "claim_direction": "positive",
+      "topic_zh": "肌酸补剂",
+      "question": "肌酸真的能增肌吗？值得吃吗？",
+      "bottom_line": "肌酸是目前证据最充分的运动补剂之一：联合抗阻训练可显著提升力量与瘦体重，多数健康成人安全有效。但收益存在人群边界——女性与疾病人群（如癌症患者）未观察到显著效果，不能无差别宣传。",
+      "action_advice": "推荐 3-5g/天，任意时间服用均可（无需刻意卡练后窗口），配合规律力量训练；肾病等特殊人群先咨询医生。",
+      "keywords": [
+        "肌酸",
+        "creatine",
+        "增肌补剂",
+        "肌酸补剂"
+      ],
+      "score_total": 87,
+      "grade": "strong",
+      "key_papers": [
+        "PMC11547435",
+        "TF2586523",
+        "PMC11346223",
+        "WILEY-rco2.70044"
+      ],
+      "updated_at": "2026-09-22"
+    },
+    {
+      "id": "protein_supplement",
+      "claim_direction": "positive",
+      "topic_zh": "蛋白粉必要性",
+      "question": "蛋白粉是必须的吗？不喝蛋白粉会少长肌肉吗？",
+      "bottom_line": "蛋白补剂能小幅增强抗阻训练的肌肉与力量增益，但前提是日常饮食蛋白不足；当每日蛋白达到约 1.6g/kg 后，额外补充不再增加收益。饮食能吃够蛋白时，蛋白粉并非必需品——其必要性常被营销夸大。",
+      "action_advice": "优先通过食物满足蛋白需求（肉/蛋/奶/豆类）；确实吃不够时用乳清蛋白补足；力量训练者目标约 1.6g/kg/天。",
+      "keywords": [
+        "蛋白粉",
+        "蛋白质补剂",
+        "蛋白补充",
+        "乳清蛋白",
+        "protein supplement"
+      ],
+      "score_total": 90,
+      "grade": "strong",
+      "key_papers": [
+        "PMID28698222",
+        "PMC8978023",
+        "PMC12862422"
+      ],
+      "updated_at": "2026-09-22"
+    },
+    {
+      "id": "protein_timing",
+      "claim_direction": "negative",
+      "topic_zh": "合成代谢窗口",
+      "question": "练后 30 分钟内必须吃蛋白吗？错过窗口会白练吗？",
+      "bottom_line": "证据明确反驳“30 分钟合成代谢窗口”神话：控制总蛋白摄入后，训练前后的蛋白时机对增肌无显著影响；关键是全天总蛋白足够。",
+      "action_advice": "不用卡 30 分钟；训练前后几小时内摄入蛋白即可，优先保证全天 1.6g/kg 总蛋白，并均匀分布到各餐。",
+      "keywords": [
+        "合成代谢窗口",
+        "蛋白时机",
+        "练后蛋白",
+        "练后30分钟",
+        "protein timing",
+        "anabolic window"
+      ],
+      "score_total": 34,
+      "grade": "unreliable",
+      "key_papers": [
+        "SCHOENFELD2013",
+        "PMID40647175"
+      ],
+      "updated_at": "2026-09-22"
+    },
+    {
+      "id": "stretching",
+      "claim_direction": "negative",
+      "topic_zh": "拉伸防伤",
+      "question": "拉伸能预防运动损伤或缓解酸痛吗？",
+      "bottom_line": "高质量系统综述（含 Cochrane）与国际专家共识一致：拉伸对减轻运动后肌肉酸痛无临床意义，对预防全因损伤无明显效果。“拉伸防伤”是被广泛传播但证据不足的说法。",
+      "action_advice": "不要把拉伸当“防伤保险”；防伤更有效的措施是力量训练与多干预训练方案；拉伸可出于柔韧性/放松目的进行，但别指望它防伤。",
+      "keywords": [
+        "拉伸",
+        "stretching",
+        "拉伸防伤",
+        "拉伸缓解酸痛",
+        "肌肉酸痛",
+        "DOMS"
+      ],
+      "score_total": 34,
+      "grade": "unreliable",
+      "key_papers": [
+        "COCHRANE-CD004577",
+        "PMC7586796",
+        "PMC12305623"
+      ],
+      "updated_at": "2026-09-22"
+    },
+    {
+      "id": "cold_heat_therapy",
+      "claim_direction": "positive",
+      "topic_zh": "冰敷vs热敷",
+      "question": "运动后酸痛该冰敷还是热敷？",
+      "bottom_line": "冷疗（冷水浸泡/冰敷）与热疗（热敷包）均能缓解运动后酸痛，证据等级中等；时机存在差异：24h 内热敷包止痛评分最高、冷水浸泡亦有效，48h 后冷冻疗法排名上升。冷热孰优尚无定论；且频繁冷疗可能削弱长期增肌适应，需权衡。",
+      "action_advice": "酸痛影响生活时可短期用热敷或冷水浸泡（10-15min、11-15°C）缓解；急性损伤肿胀期传统上先冷敷，48h 后视情况转热敷；以力量增长为主要目标时，避免每次训练后都冷疗。",
+      "keywords": [
+        "冰敷",
+        "热敷",
+        "冷水浸泡",
+        "冰浴",
+        "冷疗",
+        "热疗",
+        "酸痛冷敷",
+        "cold water immersion"
+      ],
+      "score_total": 88,
+      "grade": "strong",
+      "key_papers": [
+        "PMID34636405",
+        "PMID33493991",
+        "COCHRANE-CD008262",
+        "PMC11897523"
+      ],
+      "updated_at": "2026-09-22"
+    },
+    {
+      "id": "foam_rolling",
+      "claim_direction": "positive",
+      "topic_zh": "泡沫轴",
+      "question": "泡沫轴有用吗？能加速恢复吗？",
+      "bottom_line": "证据中等：泡沫轴能小幅减轻运动后主观酸痛（24-72h），并带来小幅表现恢复改善；但“加速肌肉重建/机制性恢复”证据不足。性价比高、风险低，可作为酸痛管理工具。",
+      "action_advice": "酸痛明显时可在目标肌群滚压 1-2 分钟/组，练后或酸痛期使用；别指望它替代休息与营养。",
+      "keywords": [
+        "泡沫轴",
+        "foam rolling",
+        "自我筋膜放松",
+        "筋膜释放",
+        "恢复工具"
+      ],
+      "score_total": 88,
+      "grade": "strong",
+      "key_papers": [
+        "PMID39593540",
+        "WIEWELHOVE2019",
+        "MENTOR-10758"
+      ],
+      "updated_at": "2026-09-22"
+    }
+  ]
+}
