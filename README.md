@@ -1,5 +1,14 @@
 # FitEvidence · 运动循证学习 Skill
 
+<p align="center">
+  <img src="website/assets/logo.png" width="180" alt="FitEvidence Logo">
+</p>
+
+> **每个结论都追到文献，每篇文献都过一遍审核规则；数据属于每个使用者。**
+
+- **概念主页（设计展示）**：<https://TEXXXXTURE.github.io/fit-evidence/>
+- **更新方向（愿景 / Roadmap）**：见 [ROADMAP.md](ROADMAP.md)——长期目标是让使用者从最底层原理理解身体与健康科学（营养 / 代谢 / 化学 / 生物 / 生理 / 医学）。
+
 帮助用户学习**运动营养学**与**运动康复**知识，核心机制：每条结论追溯原始文献，每篇文献经过一套自研双维审核规则（类影响因子）评分，过滤掉结论不合理/证据不足的流行说法。
 
 **本 Skill 是"指南 + 模板"型**：它只装操作指南、数据文件契约与内置示例数据；真正积累的知识库属于每个使用者——存在你自己的本地目录，或你自己的飞书多维表格里。
@@ -65,26 +74,30 @@
 
 ```
 fit-evidence/
-├── SKILL.md                      # Agent 工作流（初始化 + 7 步流程 + 输出模板）
-├── storage.json                  # 存储后端配置（backend / data_dir / lark 表 ID）
+├── README.md                      # 项目介绍（本文件）
+├── ROADMAP.md                     # 更新方向：原理学习层 / 学科扩充 / 学习路径
+├── SKILL.md                       # Agent 工作流（初始化 + 7 步流程 + 输出模板）
+├── storage.json                   # 存储后端配置（backend / data_dir / lark 表 ID）
 ├── scripts/
-│   ├── init_storage.py           # 数据存储初始化（选择 local / lark）
-│   ├── score_paper.py            # 双维加权评分（可复算）
-│   ├── build_knowledge_base.py   # 知识库汇总 + Markdown 视图生成
-│   ├── sync_lark.py              # 本地 JSON ↔ 飞书多维表格 CSV 交换
-│   └── storage.py                # 公共存储配置模块
+│   ├── init_storage.py            # 数据存储初始化（选择 local / lark）
+│   ├── score_paper.py             # 双维加权评分（可复算）
+│   ├── build_knowledge_base.py    # 知识库汇总 + Markdown 视图生成
+│   ├── sync_lark.py               # 本地 JSON ↔ 飞书多维表格 CSV 交换
+│   └── storage.py                 # 公共存储配置模块
 ├── templates/
-│   ├── papers.schema.json        # papers 表字段契约（飞书建表用）
-│   ├── topics.schema.json        # topics 表字段契约
-│   ├── papers.empty.json         # 空库模板
+│   ├── papers.schema.json         # papers 表字段契约（飞书建表用）
+│   ├── topics.schema.json         # topics 表字段契约
+│   ├── papers.empty.json          # 空库模板
 │   └── topics.empty.json
 ├── references/
-│   ├── scoring_rubric.md         # 评分细则（权威定义）
-│   └── topics.md                 # 主题清单与关键词归一化
-├── data/                         # 内置示例数据（可复制为用户初始库）
+│   ├── scoring_rubric.md          # 评分细则（权威定义）
+│   └── topics.md                  # 主题清单与关键词归一化
+├── data/                          # 内置示例数据（可复制为用户初始库）
 │   ├── papers.json
 │   └── topics.json
-└── knowledge_base.md             # 人读视图（脚本生成，勿手改）
+├── website/                       # 概念主页源文件（Logo + 展示页）
+├── docs/                          # GitHub Pages 发布目录（index.html）
+└── knowledge_base.md              # 人读视图（脚本生成，勿手改）
 ```
 
 ## 数据维护
