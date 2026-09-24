@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitEvidence · 运动循证学习工具</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23143D66'/%3E%3Cpath d='M14 34h8l4-8 6 20 6-20 6 20 4-8h2v8h6' stroke='%2323B5A0' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='46' cy='40' r='3' fill='%2323B5A0'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap">
+<style>
+  :root{
+    --navy:#143D66; --navy-deep:#0E2B49; --teal:#23B5A0; --teal-soft:#DFF4F0;
+    --bg:#F7F9FB; --card:#FFFFFF; --ink:#182333; --muted:#5B6B7C;
+    --good:#23B5A0; --amber:#E8A13C; --slate:#93A5B5; --bad:#D64545;
+    --line:#E3E9EF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Noto Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.7;
+    font-variant-numeric:tabular-nums;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  /* ===== 导航 ===== */
+  nav{
+    position:sticky;top:0;z-index:50;background:rgba(247,249,251,.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;gap:28px;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--navy);text-decoration:none;font-size:17px}
+  .brand img{width:30px;height:30px;border-radius:7px}
+  nav a.nav-link{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .15s}
+  nav a.nav-link:hover{color:var(--navy)}
+  .nav-cta{margin-left:auto;background:var(--navy);color:#fff;text-decoration:none;font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:8px;transition:background .15s}
+  .nav-cta:hover{background:var(--navy-deep)}
+  @media(max-width:640px){nav .nav-link{display:none}}
+  /* ===== Hero ===== */
+  header.hero{position:relative;overflow:hidden;padding:84px 0 72px}
+  header.hero::before{
+    content:"";position:absolute;right:-120px;top:-80px;width:420px;height:420px;
+    background:radial-gradient(circle at center,var(--teal-soft) 0%,transparent 66%);
+  }
+  .hero-grid{position:relative;display:grid;grid-template-columns:1fr 300px;gap:48px;align-items:center}
+  .eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.12em;color:var(--teal);margin-bottom:18px}
+  .hero h1{font-size:46px;line-height:1.22;font-weight:900;letter-spacing:-.01em;color:var(--navy-deep);margin-bottom:20px}
+  .hero h1 em{font-style:normal;color:var(--teal)}
+  .hero p.lead{font-size:16.5px;color:var(--muted);max-width:560px;margin-bottom:30px}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;transition:transform .15s,background .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover{background:#1CA58F}
+  .btn-ghost{border:1.5px solid var(--navy);color:var(--navy);background:transparent}
+  .btn-ghost:hover{background:rgba(20,61,102,.06)}
+  .hero-stats{display:flex;gap:36px;margin-top:38px}
+  .stat b{font-size:30px;font-weight:900;color:var(--navy)}
+  .stat span{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+  .hero-art{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .hero-art img{width:100%;max-width:300px;border-radius:18px;box-shadow:0 18px 50px rgba(20,61,102,.16)}
+  .hero-art figcaption{font-size:12.5px;color:var(--muted);text-align:center}
+  @media(max-width:760px){.hero-grid{grid-template-columns:1fr}.hero-art{order:-1;align-items:center}.hero h1{font-size:34px}.hero-stats{gap:22px}}
+  /* ===== Section 通用 ===== */
+  section{padding:72px 0}
+  .sec-head{max-width:640px;margin-bottom:44px}
+  .sec-head h2{font-size:29px;font-weight:900;color:var(--navy-deep);margin-bottom:12px}
+  .sec-head p{color:var(--muted);font-size:15px}
+  .sec-tag{display:inline-block;font-size:12.5px;font-weight:600;letter-spacing:.14em;color:var(--navy);background:var(--teal-soft);padding:5px 12px;border-radius:999px;margin-bottom:14px}
+  /* ===== 评分机制 ===== */
+  .formula{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;margin-bottom:40px;text-align:center}
+  .formula .f-expr{font-size:30px;font-weight:900;color:var(--navy-deep)}
+  .formula .f-expr .a{color:var(--navy)} .formula .f-expr .b{color:var(--teal)}
+  .formula .f-expr .op{color:var(--muted);font-weight:500}
+  .formula p.f-note{font-size:13.5px;color:var(--muted);margin-top:10px}
+  .dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:34px}
+  .dim{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+  .dim h3{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:9px}
+  .dim h3 .dot{width:10px;height:10px;border-radius:3px}
+  .dim.a h3 .dot{background:var(--navy)} .dim.b h3 .dot{background:var(--teal)}
+  .dim ul{list-style:none}
+  .dim li{display:flex;justify-content:space-between;font-size:14px;color:var(--ink);padding:7px 0;border-bottom:1px dashed var(--line)}
+  .dim li:last-child{border-bottom:none}
+  .dim li i{font-style:normal;font-weight:700;color:var(--muted);font-size:13px}
+  .grade-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .grade{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .grade .g-band{height:6px;border-radius:4px;margin-bottom:10px}
+  .grade b{font-size:14.5px;display:block}
+  .grade span{font-size:12px;color:var(--muted)}
+  @media(max-width:760px){.dim-grid{grid-template-columns:1fr}.grade-strip{grid-template-columns:1fr 1fr}}
+  /* ===== 主题结论 ===== */
+  #topics{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .topic-layout{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;align-items:start}
+  .chart-card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:18px 18px 8px}
+  #topicChart{width:100%;height:340px}
+  .topic-list{display:flex;flex-direction:column;gap:12px}
+  .topic-item{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--bg);transition:border-color .15s}
+  .topic-item:hover{border-color:var(--teal)}
+  .topic-item .t-score{flex:none;width:52px;text-align:center;padding:8px 0;border-radius:10px;font-weight:900;font-size:20px;color:#fff}
+  .t-score.good{background:var(--good)} .t-score.bad{background:var(--bad)} .t-score.amber{background:var(--amber)}
+  .topic-item .t-body b{display:block;font-size:15px;color:var(--navy-deep)}
+  .topic-item .t-body span{font-size:13px;color:var(--muted)}
+  .topic-item .t-body .t-grade{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;margin-top:6px}
+  .t-grade.good{background:var(--teal-soft);color:#13806F}
+  .t-grade.bad{background:#FBE9E7;color:#B53730}
+  @media(max-width:860px){.topic-layout{grid-template-columns:1fr}}
+  @media(max-width:640px){.topic-item .t-body span{font-size:14px}.hero p.lead{font-size:15.5px}}
+  /* ===== 数据架构 ===== */
+  .arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:34px}
+  .arch{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+  .arch h3{font-size:16px;font-weight:700;margin-bottom:8px}
+  .arch .tag{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+  .arch.local .tag{background:var(--teal-soft);color:#13806F}
+  .arch.lark .tag{background:#E8F0FB;color:#1F5FA8}
+  .arch p{font-size:13.5px;color:var(--muted);margin-bottom:12px}
+  .arch ul{list-style:none;font-size:13px;color:var(--ink)}
+  .arch li{padding:4px 0;padding-left:16px;position:relative}
+  .arch li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;border-radius:2px;background:var(--teal)}
+  .flow{background:var(--navy-deep);border-radius:16px;padding:30px 32px;color:#fff}
+  .flow h3{font-size:16.5px;font-weight:700;margin-bottom:22px}
+  .flow ol{list-style:none;counter-reset:step;display:flex;flex-wrap:wrap;gap:12px}
+  .flow li{flex:1;min-width:150px;counter-increment:step;font-size:13px;color:#CFE0EF;padding:14px 16px;background:rgba(255,255,255,.07);border-radius:10px;position:relative}
+  .flow li b{display:block;color:#fff;font-size:14px;margin-bottom:4px}
+  .flow li::before{content:"0" counter(step);font-weight:900;font-size:12px;color:var(--teal)}
+  @media(max-width:760px){.arch-grid{grid-template-columns:1fr}}
+  /* ===== 维护流程（时间轴） ===== */
+  .timeline{display:grid;grid-template-columns:110px 28px 1fr;gap:0 14px}
+  .tl-time{font-weight:700;color:var(--navy);font-size:14.5px;text-align:right;padding:18px 0}
+  .tl-dot{justify-self:center;position:relative}
+  .tl-dot::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--line);transform:translateX(-50%)}
+  .tl-dot i{position:relative;z-index:1;display:block;width:14px;height:14px;border-radius:50%;background:var(--teal);border:3px solid #fff;box-shadow:0 0 0 2px var(--teal);margin-top:20px}
+  .tl-body{padding:14px 0}
+  .tl-body b{font-size:15px;color:var(--navy-deep);display:block;margin-bottom:4px}
+  .tl-body p{font-size:13.5px;color:var(--muted)}
+  .tl-body code{background:var(--teal-soft);color:var(--navy);font-size:12px;padding:1px 7px;border-radius:5px;font-family:ui-monospace,"Cascadia Code",Consolas,monospace}
+  @media(max-width:640px){.timeline{grid-template-columns:84px 20px 1fr}}
+  /* ===== Footer ===== */
+  footer{background:var(--navy-deep);color:#CFE0EF;padding:56px 0 40px}
+  footer .wrap{display:flex;flex-direction:column;gap:26px;align-items:center;text-align:center}
+  footer .f-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;color:#fff}
+  footer .f-logo img{width:34px;height:34px;border-radius:8px}
+  footer p.f-desc{font-size:13.5px;max-width:520px;color:#9FB4C8}
+  footer .f-cta{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  footer .f-meta{font-size:12px;color:#7E96AD}
+  footer a{color:var(--teal);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- ===== 导航 ===== -->
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/logo.png" alt="FitEvidence logo"><span>FitEvidence</span></a>
+    <a class="nav-link" href="#mechanism">评分机制</a>
+    <a class="nav-link" href="#topics">主题结论</a>
+    <a class="nav-link" href="#architecture">数据架构</a>
+    <a class="nav-link" href="#workflow">维护流程</a>
+    <a class="nav-cta" href="https://github.com/TEXXXXTURE/fit-evidence" target="_blank" rel="noopener">查看源码</a>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">运动营养 × 运动康复 · 循证学习</span>
+      <h1>每条结论，<em>都过一遍</em>审核规则</h1>
+      <p class="lead">FitEvidence 把每个知识点追溯到原始文献，每篇文献用自研双维评分（证据真实度 × 生活影响度）审核，帮你过滤掉结论不合理的流行说法——"该信什么"有据可依。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#topics">看主题评分</a>
+        <a class="btn btn-ghost" href="https://github.com/TEXXXXTURE/fit-evidence" target="_blank" rel="noopener">GitHub 开源仓库</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>19</b><span>篇可溯源文献</span></div>
+        <div class="stat"><b>6</b><span>个已分析主题</span></div>
+        <div class="stat"><b>2</b><span>个被证伪的说法</span></div>
+      </div>
+    </div>
+    <figure class="hero-art">
+      <img src="assets/logo.png" alt="FitEvidence 品牌标志">
+      <figcaption>证据评分刻度 · 品牌标志</figcaption>
+    </figure>
+  </div>
+</header>
+
+<!-- ===== 评分机制 ===== -->
+<section id="mechanism">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">自研双维审核规则</span>
+      <h2>类影响因子，但逐篇打分</h2>
+      <p>期刊影响因子只反映平均被引量。FitEvidence 对每篇文献单独评估"能不能信 + 值不值得做"，结论可复算。</p>
+    </div>
+
+    <div class="formula">
+      <div class="f-expr">
+        <span class="a">综合分</span> <span class="op">=</span>
+        <span class="op">0.65 ×</span> <span class="a">证据真实度</span>
+        <span class="op">+</span> <span class="op">0.35 ×</span> <span class="b">生活影响度</span>
+      </div>
+      <p class="f-note">双维度、九个细化子项加权，全部由脚本计算，保证任何环境可复算。</p>
+    </div>
+
+    <div class="dim-grid">
+      <div class="dim a">
+        <h3><span class="dot"></span>证据真实度 A · 0.65</h3>
+        <ul>
+          <li>研究设计 <i>30%</i></li>
+          <li>方法学质量 <i>25%</i></li>
+          <li>可重复性 <i>20%</i></li>
+          <li>发表渠道 <i>15%</i></li>
+          <li>时效性 <i>10%</i></li>
+        </ul>
+      </div>
+      <div class="dim b">
+        <h3><span class="dot"></span>生活影响度 B · 0.35</h3>
+        <ul>
+          <li>效应量 <i>35%</i></li>
+          <li>人群适用 <i>25%</i></li>
+          <li>可操作性 <i>20%</i></li>
+          <li>成本风险 <i>20%</i></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grade-strip">
+      <div class="grade"><div class="g-band" style="background:var(--good)"></div><b>≥ 80 · 强证据</b><span>可执行</span></div>
+      <div class="grade"><div class="g-band" style="background:var(--amber)"></div><b>60-79 · 推荐</b><span>有条件采纳</span></div>
+      <div class="grade"><div class="g-band" style="background:var(--slate)"></div><b>40-59 · 存疑</b><span>证据不足</span></div>
+      <div class="grade"><div class="g-band" style="background:var(--bad)"></div><b>&lt; 40 · 不靠谱</b><span>勿轻信</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 主题结论 ===== -->
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">内置示例知识库</span>
+      <h2>6 个主题，两个被证伪</h2>
+      <p>每个主题基于多篇真实可溯源文献评分。命中库内主题时直接输出结论卡，不做重复分析。</p>
+    </div>
+
+    <div class="topic-layout">
+      <div class="chart-card">
+        <div id="topicChart" role="img" aria-label="六个运动主题的循证评分条形图"></div>
+      </div>
+      <div class="topic-list">
+        <div class="topic-item">
+          <div class="t-score good">90</div>
+          <div class="t-body"><b>蛋白粉必要性</b><span>吃够蛋白时非必需品，营销常夸大</span><span class="t-grade good">强证据·可执行</span></div>
+        </div>
+        <div class="topic-item">
+          <div class="t-score good">88</div>
+          <div class="t-body"><b>冰敷 vs 热敷</b><span>均缓解酸痛，但时机与收益有差异</span><span class="t-grade good">强证据·可执行</span></div>
+        </div>
+        <div class="topic-item">
+          <div class="t-score good">88</div>
+          <div class="t-body"><b>泡沫轴</b><span>小幅缓解酸痛，加速重建证据不足</span><span class="t-grade good">强证据·可执行</span></div>
+        </div>
+        <div class="topic-item">
+          <div class="t-score good">87</div>
+          <div class="t-body"><b>肌酸补剂</b><span>证据最充分的补剂之一，收益存在人群边界</span><span class="t-grade good">强证据·可执行</span></div>
+        </div>
+        <div class="topic-item">
+          <div class="t-score bad">34</div>
+          <div class="t-body"><b>合成代谢窗口</b><span>"练后 30 分钟窗口"是神话</span><span class="t-grade bad">不靠谱·勿轻信</span></div>
+        </div>
+        <div class="topic-item">
+          <div class="t-score bad">34</div>
+          <div class="t-body"><b>拉伸防伤</b><span>被广泛传播但证据不足</span><span class="t-grade bad">不靠谱·勿轻信</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 数据架构 ===== -->
+<section id="architecture">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">可配置后端</span>
+      <h2>数据属于每个使用者</h2>
+      <p>Skill 只装指南与模板，知识库存放在使用者自选的位置——离线本地目录，或自己账号里的飞书多维表格。</p>
+    </div>
+
+    <div class="arch-grid">
+      <div class="arch local">
+        <span class="tag">local · 默认</span>
+        <h3>本地 JSON</h3>
+        <p>零依赖、离线可用，数据留在自己的目录里，隐私优先。</p>
+        <ul>
+          <li>papers.json 文献明细</li>
+          <li>topics.json 主题结论</li>
+          <li>knowledge_base.md 人读视图</li>
+        </ul>
+      </div>
+      <div class="arch lark">
+        <span class="tag">lark · 绑定个人账号</span>
+        <h3>飞书多维表格</h3>
+        <p>数据在用户自己的飞书账号里，可被网页与其他 Agent 调用，跨设备可协作。</p>
+        <ul>
+          <li>papers 表 · topics 表</li>
+          <li>CSV 交换协议同步</li>
+          <li>别人使用 = 别人的账号</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flow">
+      <h3>一次提问，走完这条链</h3>
+      <ol>
+        <li><b>归一化</b>关键词映射到主题</li>
+        <li><b>查库</b>命中即输出结论卡</li>
+        <li><b>检索</b>系统综述 / RCT 优先</li>
+        <li><b>评分</b>双维规则机器计算</li>
+        <li><b>入库</b>刷新视图并同步飞书</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 维护流程 ===== -->
+<section id="workflow">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">一次分析 · 永久复用</span>
+      <h2>知识库怎么长出来</h2>
+      <p>新增主题或文献只需五步，数值部分全部由脚本计算，不会算错也不会漏更新。</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-time">01</div><div class="tl-dot"><i></i></div>
+      <div class="tl-body"><b>追加文献</b><p>把分析字段写入数据目录的 <code>papers.json</code></p></div>
+
+      <div class="tl-time">02</div><div class="tl-dot"><i></i></div>
+      <div class="tl-body"><b>机器评分</b><p>运行 <code>python scripts/score_paper.py</code> 回填双维分</p></div>
+
+      <div class="tl-time">03</div><div class="tl-dot"><i></i></div>
+      <div class="tl-body"><b>维护语义</b><p>更新主题的结论与行动建议字段</p></div>
+
+      <div class="tl-time">04</div><div class="tl-dot"><i></i></div>
+      <div class="tl-body"><b>刷新视图</b><p>运行 <code>build_knowledge_base.py</code> 重算主题分</p></div>
+
+      <div class="tl-time">05</div><div class="tl-dot"><i></i></div>
+      <div class="tl-body"><b>同步飞书</b><p>lark 后端用 <code>sync_lark.py export</code> 保持云端一致</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="wrap">
+    <div class="f-logo"><img src="assets/logo.png" alt="FitEvidence logo">FitEvidence</div>
+    <p class="f-desc">运动营养与运动康复的循证学习工具：逐篇引用、逐篇审核、命中复用。内容基于公开文献，仅供学习参考。</p>
+    <div class="f-cta">
+      <a class="btn btn-primary" href="https://github.com/TEXXXXTURE/fit-evidence" target="_blank" rel="noopener">GitHub 开源仓库</a>
+    </div>
+    <p class="f-meta">MIT License · 评分规则参考牛津 CEBM 证据等级与 GRADE 框架</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script>
+(function(){
+  var chart = echarts.init(document.getElementById('topicChart'));
+  var data = [
+    {name:'蛋白粉必要性', value:90},
+    {name:'冰敷 vs 热敷', value:88},
+    {name:'泡沫轴', value:88},
+    {name:'肌酸补剂', value:87},
+    {name:'拉伸防伤', value:34},
+    {name:'合成代谢窗口', value:34}
+  ];
+  var good = '#23B5A0', bad = '#D64545';
+  function colorFor(v){ return v >= 80 ? good : (v >= 60 ? '#E8A13C' : bad); }
+  var option = {
+    grid:{left:8,right:30,top:10,bottom:8,containLabel:true},
+    xAxis:{type:'value',min:0,max:100,axisLine:{show:false},axisTick:{show:false},
+      splitLine:{lineStyle:{color:'#E3E9EF'}},axisLabel:{color:'#5B6B7C',fontSize:11}},
+    yAxis:{type:'category',data:data.map(function(d){return d.name;}),
+      axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'#182333',fontSize:12.5,fontWeight:500}},
+    series:[{
+      type:'bar',data:data.map(function(d){return {
+        value:d.value,itemStyle:{color:colorFor(d.value),borderRadius:[0,6,6,0]},
+        label:{show:true,position:'right',color:'#182333',fontSize:12,fontWeight:700}
+      };}),
+      barWidth:20
+    }],
+    tooltip:{trigger:'item',triggerOn:'click',confine:true,renderMode:'richText',
+      formatter:function(p){ return p.name + '\n' + p.value + ' / 100'; }}
+  };
+  chart.setOption(option);
+  window.addEventListener('resize', function(){ chart.resize(); });
+})();
+</script>
+</body>
+</html>
